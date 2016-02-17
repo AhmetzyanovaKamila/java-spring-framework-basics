@@ -83,7 +83,7 @@
 
     <bean id="juggler3" class="foo.bar.performers.Juggler">
         <constructor-arg name="countOfBeanbags" value="#{1+3}" />
-        <property name="poem" value="#{song_selector.selectSong()}" />
+        <property name="poem" value="#{song_selector.selectSong(0)}" />
     </bean>
 
 </beans>
