@@ -7,44 +7,46 @@
     <context:annotation-config />
     <context:component-scan base-package="foo.bar"/>
 
-    <bean id="poem" class="foo.bar.Poem"></bean>
+    <bean id="vasyas_poem" class="foo.bar.etc.Poem"
+          p:text="cool vasya's poem"
+    />
 
-    <bean id="vasya" class="foo.bar.Juggler">
+    <bean id="vasya" class="foo.bar.performers.Juggler">
         <constructor-arg name="countOfBeanbags" value="15" />
-        <constructor-arg name="poem" ref="poem" />
+        <constructor-arg name="poem" ref="vasyas_poem" />
     </bean>
 
     <!-- внедрение внутренних компонентов -->
-    <bean id="kolya" class="foo.bar.Juggler">
+    <bean id="kolya" class="foo.bar.performers.Juggler">
         <constructor-arg name="countOfBeanbags" value="15" />
         <property name="poem">
-            <bean class="foo.bar.Poem"></bean>
+            <bean class="foo.bar.etc.Poem"></bean>
         </property>
     </bean>
 
     <!-- свяывание с помощью пространства имен p -->
-    <bean id="dima" class="foo.bar.Juggler"
+    <bean id="dima" class="foo.bar.performers.Juggler"
           p:countOfBeanbags="15"
-          p:poem-ref="poem"
+          p:poem-ref="vasyas_poem"
     />
 
-    <bean id="guitar" class="foo.bar.Guitar"></bean>
-    <bean id="bass" class="foo.bar.Bass"></bean>
-    <bean id="drums" class="foo.bar.Drums"></bean>
+    <bean id="guitar" class="foo.bar.instruments.Guitar"></bean>
+    <bean id="bass" class="foo.bar.instruments.Bass"></bean>
+    <bean id="drums" class="foo.bar.instruments.Drums"></bean>
 
     <!-- внедрение коллекций -->
-    <bean id="d" class="foo.bar.OneManBand">
+    <bean id="d" class="foo.bar.performers.OneManBand">
         <property name="instruments">
             <list>
-                <bean class="foo.bar.Guitar"></bean>
-                <bean class="foo.bar.Bass"></bean>
-                <bean class="foo.bar.Drums"></bean>
+                <bean class="foo.bar.instruments.Guitar"></bean>
+                <bean class="foo.bar.instruments.Bass"></bean>
+                <bean class="foo.bar.instruments.Drums"></bean>
             </list>
         </property>
     </bean>
 
     <!-- внедрение отображений -->
-    <bean id="m" class="foo.bar.OneManBandWithMap">
+    <bean id="m" class="foo.bar.performers.OneManBandWithMap">
         <property name="instruments">
             <map>
                 <entry key="guitar" value-ref="guitar" />
@@ -55,8 +57,33 @@
     </bean>
 
     <!-- внедрение пустого значения -->
-    <bean id="none" class="foo.bar.OneManBandWithMap">
+    <bean id="none" class="foo.bar.performers.OneManBandWithMap">
         <property name="instruments"><null/></property>
+    </bean>
+
+    <!-- SpEL: литералы -->
+    <bean id="juggler1" class="foo.bar.performers.Juggler">
+        <constructor-arg name="countOfBeanbags" value="#{15}" />
+        <property name="poem" value="#{vasyas_poem}" />
+    </bean>
+
+    <!-- SpEL: ссылки -->
+    <bean id="juggler2" class="foo.bar.performers.Juggler">
+        <constructor-arg name="countOfBeanbags" value="#{1+3}" />
+        <property name="poem" value="#{vasya.poem}" />
+    </bean>
+
+    <bean id="song_selector" class="foo.bar.etc.SongSelector">
+        <property name="songs">
+            <list>
+                <bean class="foo.bar.etc.Song" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="juggler3" class="foo.bar.performers.Juggler">
+        <constructor-arg name="countOfBeanbags" value="#{1+3}" />
+        <property name="poem" value="#{song_selector.selectSong()}" />
     </bean>
 
 </beans>

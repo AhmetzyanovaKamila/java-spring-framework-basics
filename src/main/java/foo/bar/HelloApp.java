@@ -1,5 +1,6 @@
 package foo.bar;
 
+import foo.bar.performers.Performer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

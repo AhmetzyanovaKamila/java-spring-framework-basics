@@ -1,4 +1,6 @@
-package foo.bar;
+package foo.bar.performers;
+
+import foo.bar.etc.Poem;
 
 /**
  * Created by etc on 20.03.2015.

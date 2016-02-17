@@ -1,4 +1,4 @@
-package foo.bar;
+package foo.bar.instruments;
 
 /**
  * Created by aur on 15.02.2016.

@@ -1,4 +1,6 @@
-package foo.bar;
+package foo.bar.performers;
+
+import foo.bar.instruments.Instrument;
 
 import java.util.Collection;
 
